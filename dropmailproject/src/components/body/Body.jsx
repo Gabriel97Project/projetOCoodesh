@@ -1,4 +1,4 @@
-import { BodyInboxStyled, BodyMailStyled, BodyMainStyled, BodyStyled } from "./BodyStyle";
+import { BodyInboxStyled, BodyMailStyled, BodyStyled } from "./BodyStyle";
 
 export default function Body(){
   return(

@@ -1,6 +1,7 @@
 import { ButtonCopyStyled, EmailInputStyled, HeaderStyle, RefreshButtonStyled } from "./HeaderStyle";
 import { LuCopy } from "react-icons/lu";
 import { FiRotateCw } from "react-icons/fi";
+import axios from 'axios';
 
 
 export default function Header() {
@@ -27,3 +28,33 @@ export default function Header() {
   )
 
 };
+
+
+  const authToken =  'web-test-20231015VyPmh777';
+  const apiUrl = `https://cors-anywhere.herokuapp.com/https://dropmail.me/api/graphql/${authToken}`;
+
+
+  const generatingRandomEmails  = async () => {
+    try {
+      const response = await axios.post(apiUrl, {
+        query: `
+          mutation {
+            introduceSession {
+              id
+              addresses {
+                address
+              }
+            }
+          }
+        `,
+      });
+  
+      const session = response.data.data.introduceSession;
+      const address = session.addresses[0].address;
+  
+      console.log(`E-mail gerado: ${address}`);
+    } catch (error) {
+      console.error('Erro na solicitação:', error.message);
+    }
+  };
+generatingRandomEmails();
