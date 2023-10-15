@@ -4,9 +4,9 @@ export default function Body(){
   return(
     <BodyStyled>
       <BodyInboxStyled>
-        <h4 id="WelcomeInboxText">Inbox</h4>
-        <p className="InboxMailCheck">Hello</p>
-        <p className="InboxMailCheck">welcome</p>
+        <p id="WelcomeInboxText">Inbox</p>
+        <p className="InboxMailCheck" style={{fontWeight:"bold"}}>Hello</p>
+        <p className="InboxMailCheck" style={{color:"blue", fontWeight:"bold"}}>welcome</p>
         <p className="InboxMailCheck">your temp e-mail adress is ready...</p>
       </BodyInboxStyled>
       <BodyMailStyled>

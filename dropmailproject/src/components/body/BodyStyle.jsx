@@ -31,6 +31,8 @@ export const BodyInboxStyled = styled.div`
     //background-color:aqua;
   }
   .InboxMailCheck{
+    
+    margin: 0px;
     margin-left:5px;
   }
 `
