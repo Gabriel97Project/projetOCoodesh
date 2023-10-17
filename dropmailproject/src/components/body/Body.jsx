@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { BodyInboxStyled, BodyMailStyled, BodyStyled } from "./BodyStyle";
 import axios from "axios";
+import MailModal from "./MailModal";
 
 
 
 export default function Body({ sessionIdState }) {
 
-  const [mailBoxState, setMailBox] = useState('')
+  const [mailBoxState, setMailBox] = useState('');
+  const [modalState,setModalState] = useState(false);
 
   const authToken = 'web-test-20231015VyPmh777';
   const apiUrl = `/api/graphql/${authToken}`;
@@ -46,13 +48,20 @@ export default function Body({ sessionIdState }) {
       console.error('Erro na solicitação:', error.message);
     }
   };
-  useEffect(() => {
+  /* useEffect(() => {
     // Código que depende do valor atualizado de sessionIdState
     console.log(sessionIdState, 'dados da sessaooooooooooooooooooo');
     console.log('Dados do e-mail:', mailBoxState);
   }, [mailBoxState]);
+ */
+  const modalOpen = () =>{
+    setModalState(true)
+  }; 
 
-  return (
+  if(modalState){
+    return <MailModal closeModal={() => setModalState(false)} mailBoxState={mailBoxState}/>
+  }else{
+    return (
     <BodyStyled>
       <BodyInboxStyled>
         <p id="WelcomeInboxText">Inbox</p>
@@ -72,7 +81,7 @@ export default function Body({ sessionIdState }) {
               
               {mailBoxState.mails.map((mailsUnit, index) => (
                 <tr key={index} >
-                  <td><button id="mailCheckButtonStyle">{mailsUnit.fromAddr}</button> </td>
+                  <td><button id="mailCheckButtonStyle" onClick={modalOpen}>{mailsUnit.fromAddr}</button> </td>
                 </tr>
               ))}
             </tbody>
@@ -94,4 +103,7 @@ export default function Body({ sessionIdState }) {
       </BodyMailStyled>
     </BodyStyled>
   )
+  }
+
+  
 }
