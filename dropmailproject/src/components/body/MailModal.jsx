@@ -2,7 +2,7 @@ import { ModalBackgroundStyled, ModalMainBackgroundStyled } from "./MailModalSty
 
 
 
-export default function MailModal({closeModal,mailBoxState}){
+export default function MailModal({closeModal,mailBoxStategit }){
 
 
 
