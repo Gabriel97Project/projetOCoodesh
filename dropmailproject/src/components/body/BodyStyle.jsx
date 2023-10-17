@@ -49,6 +49,10 @@ export const BodyMailStyled = styled.div`
     height:85%;
     border: solid 1px;
     border-color:#eeeee4;
+    #mailCheckButtonStyle{
+      width:100%;
+      height:40px;
+    };
     
     
     
@@ -59,6 +63,8 @@ export const BodyMailStyled = styled.div`
       border-color:#eeeee4;
       width:100%;
       font-weight: bold;
+      display:flex;
+      justify-content:space-between;
       //background-color:aqua;
     }
 
