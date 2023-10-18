@@ -5,54 +5,21 @@ import MailModal from "./MailModal";
 
 
 
-export default function Body({ sessionIdState }) {
+export default function Body({ sessionIdState ,setSessionIdState}) {
 
-  const [mailBoxState, setMailBoxState] = useState('');
+  const [mailBoxState, setMailBoxState] = useState([]);
   const [modalState,setModalState] = useState(false);
   const [selectedMailState, setSelectedMailState] = useState('');
 
   const authToken = 'web-test-20231015VyPmh777';
   const apiUrl = `/api/graphql/${authToken}`;
 
-  useEffect(() => {
-    const  getEmailData = async () => {
-      try {
-        const response = await axios.post(apiUrl, {
-          query: `
-            query {
-              session(id:"${sessionIdState}") {
-                mails {
-                  rawSize,
-                  fromAddr,
-                  toAddr,
-                  downloadUrl,
-                  text,
-                  headerSubject
-                }
-              }
-            }
-          `,
-        });
-  
-        const sessionData = response.data.data.session;
-        console.log('Dados brutos da sessãoooooooooooooooo:', sessionData);
-  
-        const responseData = response.data;
-        console.log('Resposta da API GraphQLllllllllllllll:', responseData);
-  
-        setMailBoxState(response.data.data.session.mails, 'resposta do meu state');
-  
-        // Faça o que quiser com os dados, como armazená-los no estado, exibi-los, etc.
-      } catch (error) {
-        console.error('Erro na solicitação:', error.message);
-      }
-    };
-  
-    // Chame a função fetchData quando o sessionIdState mudar
-    getEmailData();
-  }, [sessionIdState]);
   const getEmailData = async () => {
     try {
+      if (!sessionIdState) {
+        console.error('ID da sessão inválido ou ausenteeeee.');
+        return;
+      }
 
       const response = await axios.post(apiUrl, {
         query: `
@@ -71,28 +38,35 @@ export default function Body({ sessionIdState }) {
         `,
       });
 
+/*       setMailBoxState(response.data.data.session.mails, 'resposta do meu state'); */
       const sessionData = response.data.data.session;
-      console.log('Dados brutos da sessãoooooooooooooooo:', sessionData);
-
-      const responseData = response.data;
-      console.log('Resposta da API GraphQLllllllllllllll:', responseData);
-
-
-
-      setMailBoxState(response.data.data.session.mails, 'resposta do meu state');
-
-      // Faça o que quiser com os dados, como armazená-los no estado, exibi-los, etc.
+      if (sessionData && sessionData.mails) {
+        setMailBoxState(sessionData.mails);
+        localStorage.setItem('emailData', JSON.stringify(sessionData.mails));
+      } else {
+        setMailBoxState([]);
+        console.error('Dados de sessão inválidos ou vazios.');
+      }
     } catch (error) {
       console.error('Erro na solicitação:', error.message);
     }
   };
-  useEffect(() => {
+/*   useEffect(() => {
     // Código que depende do valor atualizado de sessionIdState
     console.log(sessionIdState, 'dados da sessaooooooooooooooooooo');
     console.log('Dados do e-mail:', mailBoxState);
     getEmailData()
-  }, [sessionIdState]);
- 
+  }, [sessionIdState]); */
+  useEffect(() => {
+    // Recupere os dados da sessão ao carregar a página
+    const storedSessionIdState = localStorage.getItem('sessionIdState');
+
+    if (storedSessionIdState) {
+      setSessionIdState(storedSessionIdState);
+      getEmailData(); // Chame getEmailData apenas se tivermos um sessionIdState válido
+    }
+  }, [setSessionIdState]);
+
   const modalOpen = (mailsDataUnit) => {
     setModalState(true);
     setSelectedMailState(mailsDataUnit);

@@ -13,7 +13,7 @@ function App() {
    
     <AppStyledMain>
       <Header sessionIdState={sessionIdState} setSessionIdState={setSessionIdState} />
-      <Body sessionIdState={sessionIdState}/>
+      <Body sessionIdState={sessionIdState} setSessionIdState={setSessionIdState}/>
     </AppStyledMain>
     
   

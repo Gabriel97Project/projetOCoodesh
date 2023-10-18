@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 
 export default function Header({ sessionIdState, setSessionIdState }) {
 
-  const [emailState, setEmailState] = useState('Gerador de E-mails');
- 
+  const [emailState, setEmailState] = useState(localStorage.getItem('userEmail') || 'Gerador de E-mails');
+  
 
   const authToken = 'web-test-20231015VyPmh777';
   const apiUrl = `/api/graphql/${authToken}`;
@@ -32,15 +32,28 @@ export default function Header({ sessionIdState, setSessionIdState }) {
 
       const session = response.data.data.introduceSession;
       console.log(session,'dados da sessao');
-      setSessionIdState(session.id);
+    
       console.log(sessionIdState,'dados da sessaooooooooooooooooooo');
       const address = session.addresses[0].address;
 
       setEmailState(address);
+      localStorage.setItem('userEmail', address);
+       localStorage.setItem('sessionIdState', session.id); 
+
+      if (session.id && session.expiresAt) {
+        // Armazene no Local Storage
+        localStorage.setItem('sessionData', JSON.stringify(session));
+  
+        // Atualize o estado do componente conforme necessário
+        setSessionIdState(session.id);
+        // ... Outras atualizações de estado conforme necessário
+      } else {
+        console.error('Dados da sessão incompletos.');
+      }
     } catch (error) {
       console.error('Erro na solicitação:', error.message);
     }
-  };
+  }
  /*  useEffect(() => { console.log(emailState, 'estado do email') }, [emailState]) */
   
 
