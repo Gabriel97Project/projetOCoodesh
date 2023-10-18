@@ -7,12 +7,50 @@ import MailModal from "./MailModal";
 
 export default function Body({ sessionIdState }) {
 
-  const [mailBoxState, setMailBox] = useState('');
+  const [mailBoxState, setMailBoxState] = useState('');
   const [modalState,setModalState] = useState(false);
+  const [selectedMailState, setSelectedMailState] = useState('');
 
   const authToken = 'web-test-20231015VyPmh777';
   const apiUrl = `/api/graphql/${authToken}`;
 
+  useEffect(() => {
+    const  getEmailData = async () => {
+      try {
+        const response = await axios.post(apiUrl, {
+          query: `
+            query {
+              session(id:"${sessionIdState}") {
+                mails {
+                  rawSize,
+                  fromAddr,
+                  toAddr,
+                  downloadUrl,
+                  text,
+                  headerSubject
+                }
+              }
+            }
+          `,
+        });
+  
+        const sessionData = response.data.data.session;
+        console.log('Dados brutos da sessãoooooooooooooooo:', sessionData);
+  
+        const responseData = response.data;
+        console.log('Resposta da API GraphQLllllllllllllll:', responseData);
+  
+        setMailBoxState(response.data.data.session.mails, 'resposta do meu state');
+  
+        // Faça o que quiser com os dados, como armazená-los no estado, exibi-los, etc.
+      } catch (error) {
+        console.error('Erro na solicitação:', error.message);
+      }
+    };
+  
+    // Chame a função fetchData quando o sessionIdState mudar
+    getEmailData();
+  }, [sessionIdState]);
   const getEmailData = async () => {
     try {
 
@@ -41,26 +79,27 @@ export default function Body({ sessionIdState }) {
 
 
 
-      setMailBox(response.data.data.session, 'resposta do meu state');
+      setMailBoxState(response.data.data.session.mails, 'resposta do meu state');
 
       // Faça o que quiser com os dados, como armazená-los no estado, exibi-los, etc.
     } catch (error) {
       console.error('Erro na solicitação:', error.message);
     }
   };
-  /* useEffect(() => {
+  useEffect(() => {
     // Código que depende do valor atualizado de sessionIdState
     console.log(sessionIdState, 'dados da sessaooooooooooooooooooo');
     console.log('Dados do e-mail:', mailBoxState);
-  }, [mailBoxState]);
- */
-  const modalOpen = () =>{
-    setModalState(true)
-  }; 
+    getEmailData()
+  }, [sessionIdState]);
+ 
+  const modalOpen = (mailsDataUnit) => {
+    setModalState(true);
+    setSelectedMailState(mailsDataUnit);
+    
+  };
 
-  if(modalState){
-    return <MailModal closeModal={() => setModalState(false)} mailBoxState={mailBoxState}/>
-  }else{
+ console.log(selectedMailState,"select state")
     return (
     <BodyStyled>
       <BodyInboxStyled>
@@ -75,13 +114,13 @@ export default function Body({ sessionIdState }) {
           <button onClick={getEmailData}>Atualizar caixa de entrada</button>
         </div>
         <div id="MailContent">
-        {mailBoxState && mailBoxState.mails.length > 1 ? (
+        {mailBoxState ? (
           <table id="mailTableStyle" style={{width:'100%'}}>
             <tbody>
               
-              {mailBoxState.mails.map((mailsUnit, index) => (
+              {mailBoxState.map((mailsDataUnit, index) => (
                 <tr key={index} >
-                  <td><button id="mailCheckButtonStyle" onClick={modalOpen}>{mailsUnit.fromAddr}</button> </td>
+                  <td><button id="mailCheckButtonStyle" onClick={()=>{modalOpen(mailsDataUnit)}}>{mailsDataUnit.fromAddr}</button> </td>
                 </tr>
               ))}
             </tbody>
@@ -89,8 +128,11 @@ export default function Body({ sessionIdState }) {
         ) : (
           <p>CAIXA VAZIA</p>
         )}
+        {modalState && (
+        <MailModal closeModal={() => setModalState(false)} selectedMailState={selectedMailState} />
+      )}
       </div>
-        {/* <div id="MailContent">
+       {/*   <div id="MailContent">
           {mailBoxState.mails ?
             <button id="mailCheckButtonStyle">
               {mailBoxState.mails.map((mailsUnit) => {
@@ -99,11 +141,10 @@ export default function Body({ sessionIdState }) {
             </button> :
             <p>CAIXA VAZIA</p>
           }
-        </div> */}
+        </div>  */}
       </BodyMailStyled>
     </BodyStyled>
   )
   }
 
   
-}

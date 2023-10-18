@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function Header({ sessionIdState, setSessionIdState }) {
 
-  const [emailState, setEmailState] = useState('');
+  const [emailState, setEmailState] = useState('Gerador de E-mails');
  
 
   const authToken = 'web-test-20231015VyPmh777';
@@ -41,7 +41,8 @@ export default function Header({ sessionIdState, setSessionIdState }) {
       console.error('Erro na solicitação:', error.message);
     }
   };
-  useEffect(() => { console.log(emailState, 'estado do email') }, [emailState])
+ /*  useEffect(() => { console.log(emailState, 'estado do email') }, [emailState]) */
+  
 
   const copyToClipboard = () => {
     emailState && emailState.length > 1 ? navigator.clipboard.writeText(emailState) : console.log("Sem email disponivel;");
