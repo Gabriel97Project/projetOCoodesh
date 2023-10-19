@@ -12,7 +12,7 @@ export default function Body({ sessionIdState, setSessionIdState }) {
   const [modalState, setModalState] = useState(false);
   const [selectedMailState, setSelectedMailState] = useState('');
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [notificationModalState, setNotificationModalState] = useState(false);
+
 
   const authToken = 'web-test-20231015VyPmh777';
   const apiUrl = `/api/graphql/${authToken}`;
@@ -57,12 +57,12 @@ export default function Body({ sessionIdState, setSessionIdState }) {
       getEmailData()
     }, [sessionIdState]); */
   useEffect(() => {
-    // Recupere os dados da sessão ao carregar a página
+
     const storedSessionIdState = localStorage.getItem('sessionIdState');
 
     if (storedSessionIdState) {
       setSessionIdState(storedSessionIdState);
-      getEmailData(); // Chame getEmailData apenas se tivermos um sessionIdState válido
+      getEmailData(); 
     }
   }, [setSessionIdState]);
 
@@ -84,7 +84,7 @@ export default function Body({ sessionIdState, setSessionIdState }) {
       // Limpar o intervalo ao desmontar o componente
       clearInterval(intervalId);
     };
-  }, [sessionIdState]); // Certifique-se de incluir a dependência sessionIdState aqui
+  }, [sessionIdState]); 
 
 /* 
   const notificationModalOpen = (mailsDataUnit) => {
@@ -110,7 +110,7 @@ export default function Body({ sessionIdState, setSessionIdState }) {
               setSelectedMailState(lastMail);
             };
             
-            // Salvar a notificação atual para verificar se já existe uma notificação visível
+        
             Notification.currentNotification = notification;
           }
         }
