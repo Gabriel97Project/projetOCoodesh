@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 export const HeaderStyle = styled.div`
   //background-color:yellow;
+  max-width: 1500px;
   width:98%;
   height: 200px;
   border: solid 1px;

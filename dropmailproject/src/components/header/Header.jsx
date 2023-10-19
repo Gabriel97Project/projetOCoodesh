@@ -69,10 +69,6 @@ export default function Header({ sessionIdState, setSessionIdState }) {
         <ButtonCopyStyled onClick={copyToClipboard}><LuCopy /> Copy</ButtonCopyStyled>
       </div>
       <div id="RefreshEmailStyle">
-        <p>Autorefresh in ...</p>
-        <div id="RefreshTimingStyle">
-          5
-        </div>
         <RefreshButtonStyled onClick={generatingRandomEmails}>
           <FiRotateCw className="FiRotateCwStyle" />
         </RefreshButtonStyled>

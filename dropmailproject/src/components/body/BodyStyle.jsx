@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 export const BodyStyled= styled.div`
 
   background-color: #f0f5f5;
+  max-width: 1500px;
   width:98%;
   height:600px;
   border: solid 1px;
