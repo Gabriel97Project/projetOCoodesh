@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 
 export const HeaderStyle = styled.div`
-  //background-color:yellow;
+  
   max-width: 1500px;
   width:98%;
   height: 200px;
@@ -13,37 +13,53 @@ export const HeaderStyle = styled.div`
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  #EmailAndInputStyle{
+  #EmailInputAndButtontStyle{
+
     display:flex;
     flex-direction:row;
     width:40%;
   }
   #RefreshEmailStyle{
+
     margin-top:10px;
     width:40%;
     display:flex;
     flex-direction:row;
-    #RefreshTimingStyle{
-      width:25px;
-      height:25px;
-      border-radius:100%;
-      border: solid 2px;
-      border-color:#eeeee4;
-      margin-right:10px;
-      display:flex;
-      flex-direction:row;
-      align-items:center;
-      justify-content:center;
-
-    }
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
   p{
     width:40%;
     margin: 5px;
-
-    //background-color:red;
+    
   }
+  @media (max-width: 768px) {
+
+    #EmailInputAndButtontStyle{ 
+      width:60%;
+    }
+    #RefreshEmailStyle{
+      width:60%;
+    }
+    p{
+      width:60%;
+    }
+  }
+  @media (max-width: 600px) {
+    height: 250px;
+    
+    #EmailInputAndButtontStyle{
+      width:90%;
+    }
+    #RefreshEmailStyle{
+      width:90%;
+    }
+    p{
+      width:90%;
+    }
   
+  }
 `
 
 export const ButtonCopyStyled= styled.button`
@@ -51,6 +67,13 @@ export const ButtonCopyStyled= styled.button`
   border: 2px solid;
   border-color:#eeeee4;
   background-color:white;
+  @media (max-width: 600px) {
+      
+    
+        
+        width:20%;
+     
+    }
 
 `
 
@@ -60,6 +83,17 @@ export const EmailInputStyled = styled.input`
   border-color:#eeeee4;
   width:70%;
   height:35px;
+  @media (max-width: 768px) {
+      
+
+      width:90%;
+   
+  }
+  @media (max-width: 600px) {
+      
+      width: 90%;
+    
+    }
 
 `
 
@@ -82,5 +116,6 @@ export const RefreshButtonStyled = styled.button`
     z-index: 1;
 
   } 
+ 
 
 `

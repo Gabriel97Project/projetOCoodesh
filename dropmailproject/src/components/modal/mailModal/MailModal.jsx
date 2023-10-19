@@ -1,30 +1,20 @@
-import { useState } from "react";
-import { ModalBackgroundStyled, ModalMainBackgroundStyled } from "./MailModalStyle";
+import { ModalBackgroundStyled, ModalCloseButtonStyled, ModalMainBackgroundStyled } from "./MailModalStyle";
 
 
 
 export default function MailModal({ closeModal, selectedMailState }) {
 
-
-  console.log(selectedMailState, 'select state unit');
-  /*   {mailBoxState.mails.map((mailsDataUnit) => {
-         setMailsDataUnitState(mailsDataUnit)
-      })
-       
-  }   */
-
-  /* handleMailClick(mailsDataUnit); */
   const firstLine = selectedMailState.text.split('\r')[0];
 
   return (
     <ModalBackgroundStyled>
     <ModalMainBackgroundStyled>
-      <button onClick={closeModal}>X</button>
+      <ModalCloseButtonStyled onClick={closeModal}>X</ModalCloseButtonStyled>
       {selectedMailState && (
-        <div>
-          <p>De: {selectedMailState.fromAddr}</p>
-          <p>Assunto: {selectedMailState.headerSubject}</p>
-          <p>{firstLine}</p>
+        <div id="mailContentModalStyle">
+          <p id="mailTextFromStyle" >De: {selectedMailState.fromAddr}</p>
+          <p id="mailTextSubjectStyle" >Assunto: {selectedMailState.headerSubject}</p>
+          <p id="mailTextContentStyle">{firstLine}</p>
         </div>
       )}
     </ModalMainBackgroundStyled>

@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const AppStyledMain = styled.div`
   
-  width:100%;
+  width:100vw;
   height: 100vh;
-  //background-color:aqua;
+  background-color:#f7f4dc;
   display:flex;
   flex-direction:column;
   align-items:center;

@@ -2,10 +2,10 @@ import { ButtonCopyStyled, EmailInputStyled, HeaderStyle, RefreshButtonStyled } 
 import { LuCopy } from "react-icons/lu";
 import { FiRotateCw } from "react-icons/fi";
 import axios from 'axios';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
-export default function Header({ sessionIdState, setSessionIdState }) {
+export default function Header({ setSessionIdState, setMailBoxState }) {
 
   const [emailState, setEmailState] = useState(localStorage.getItem('userEmail') || 'Gerador de E-mails');
   
@@ -30,10 +30,10 @@ export default function Header({ sessionIdState, setSessionIdState }) {
        `,
       });
 
+      setMailBoxState([]);
+
       const session = response.data.data.introduceSession;
-      console.log(session,'dados da sessao');
-    
-      console.log(sessionIdState,'dados da sessaooooooooooooooooooo');
+
       const address = session.addresses[0].address;
 
       setEmailState(address);
@@ -41,20 +41,24 @@ export default function Header({ sessionIdState, setSessionIdState }) {
        localStorage.setItem('sessionIdState', session.id); 
 
       if (session.id && session.expiresAt) {
-        // Armazene no Local Storage
         localStorage.setItem('sessionData', JSON.stringify(session));
-  
-        // Atualize o estado do componente conforme necessário
         setSessionIdState(session.id);
-        // ... Outras atualizações de estado conforme necessário
-      } else {
-        console.error('Dados da sessão incompletos.');
       }
+      const expirationCheckInterval = setInterval(() => {
+        const now = new Date().toISOString();
+        if (now > session.expiresAt) {
+          // Remover dados do localStorage se o e-mail expirou
+          clearInterval(expirationCheckInterval);
+          localStorage.removeItem('userEmail');
+          localStorage.removeItem('sessionIdState');
+          localStorage.removeItem('sessionData');
+          setSessionIdState(null);
+        }
+      }, 60000);
     } catch (error) {
       console.error('Erro na solicitação:', error.message);
     }
   }
- /*  useEffect(() => { console.log(emailState, 'estado do email') }, [emailState]) */
   
 
   const copyToClipboard = () => {
@@ -64,7 +68,7 @@ export default function Header({ sessionIdState, setSessionIdState }) {
   return (
     <HeaderStyle>
       <p>Your temporary email adress</p>
-      <div id="EmailAndInputStyle">
+      <div id="EmailInputAndButtontStyle">
         <EmailInputStyled type="email" placeholder={emailState} readOnly />
         <ButtonCopyStyled onClick={copyToClipboard}><LuCopy /> Copy</ButtonCopyStyled>
       </div>

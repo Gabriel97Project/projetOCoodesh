@@ -18,8 +18,55 @@ export const ModalBackgroundStyled = styled.div`
 export const ModalMainBackgroundStyled = styled.div`
 
   background-color:white;
-  width:40%;
+  width:70%;
   height:60%;
+  position: relative;
+  overflow: hidden;
+ 
+  #mailContentModalStyle{
 
+    margin-top:100px;
+    margin-left:40px;
+    #mailTextFromStyle{
+      border:solid 1px;
+      border-color:transparent;
+      background-color:#f7f4dc;
+      width:90%;
+    }
+    #mailTextSubjectStyle{
+      background-color:#ebe8e8;
+      width:90.2%;
+    } 
+    #mailTextContentStyle{
+      width:90.2%;
+      border:solid 1px;
+      border-color:#d6d4d4;
+      height:300px;
+      word-wrap: break-word;
+      overflow-y:auto;
+    }
+  }
+  @media (max-width: 600px) {  
+    width:90%;
+    height:70%;
+    #mailTextContentStyle{
+   
+      height:400px;
+
+    }
+  } 
 
 `;
+
+
+export const ModalCloseButtonStyled = styled.div`
+  background-color:#7d0101;
+  color: white;
+  width:30px;
+  height:30px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:absolute;
+  right:0px;
+`
