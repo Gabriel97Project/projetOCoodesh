@@ -18,4 +18,4 @@ que eu superasse esse desafio.
   Ao final dos cinco dias de trabalho árduo, consegui concluir o projeto de forma bem-sucedida. O resultado é um aplicativo responsivo, adaptado para tablets e smartphones, destacando não apenas minhas habilidades técnicas, mas também minha capacidade de aprender e superar obstáculos.
 A experiência como um todo reforçou minha convicção de que, na programação, cada desafio é uma oportunidade de aprendizado. Estou entusiasmado com a perspectiva de enfrentar mais desafios e contribuir significativamente para projetos futuros na Coodesh.
 
-[LINK DA APLICAÇÃO]([Texto do Link](URL do Link))
+[LINK DA APLICAÇÃO](URL do Link)
